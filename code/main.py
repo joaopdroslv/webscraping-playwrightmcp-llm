@@ -1,8 +1,7 @@
 import asyncio
-import code.logs
 from code.gpt_model import gpt_model
 from code.mcp import BrowserMCP
-from code.schemas import ProductList
+from code.schemas.product import ProductsOutput
 from code.simple_mcp import simple_mcp
 
 from langchain_core.messages import AIMessage
@@ -37,7 +36,7 @@ async def main():
             query="AMD Ryzen 7 5800X3D",
         )
 
-        product_model = gpt_model.with_structured_output(schema=ProductList)
+        product_model = gpt_model.with_structured_output(schema=ProductsOutput)
 
         response = product_model.invoke(
             f"""
@@ -57,8 +56,8 @@ async def main():
         """
         )
 
-        structured_output: ProductList = response
-        product_list = structured_output.products
+        products_output: ProductsOutput = response
+        product_list = products_output.products
 
         print(f"Found a total of [ {len(product_list)} ] products")
         for i, p in enumerate(product_list):

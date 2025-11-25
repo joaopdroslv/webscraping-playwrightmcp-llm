@@ -8,5 +8,5 @@ class Product(BaseModel):
     price: float
 
 
-class ProductList(BaseModel):
+class ProductsOutput(BaseModel):
     products: List[Product]
