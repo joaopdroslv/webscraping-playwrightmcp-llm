@@ -1,10 +1,13 @@
-import base64
+import os
 from typing import Optional
 
+from dotenv import load_dotenv
 from fastmcp.client import Client
 from fastmcp.client.transports import StreamableHttpTransport
 
-PLAYWRIGHT_MCP_URL = "http://localhost:8931"
+load_dotenv()
+
+PLAYWRIGHT_MCP_URL = os.getenv("PLAYWRIGHT_MCP_URL")
 
 
 class BrowserMCP:
@@ -56,27 +59,3 @@ class BrowserMCP:
         snapshot = await self.client.call_tool("browser_snapshot", {})
 
         return snapshot.content
-
-
-async def simple_implementation(page_url: str) -> str:
-
-    transport = StreamableHttpTransport(PLAYWRIGHT_MCP_URL)
-
-    async with Client(transport) as client:
-        tools = await client.list_tools()
-        print("Available tools:", [t.name for t in tools])
-
-        await client.call_tool(
-            "browser_navigate",
-            {"url": page_url},
-        )
-        await client.call_tool("browser_wait_for", {"time": 10})
-        result = await client.call_tool(
-            "browser_take_screenshot", {"fullPage": True, "type": "png"}
-        )
-
-        for item in result.content:
-            if getattr(item, "type", None) == "image":
-                raw_bytes = base64.b64decode(item.data)
-                with open("screenshot.png", "wb") as f:
-                    f.write(raw_bytes)

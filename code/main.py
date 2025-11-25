@@ -1,7 +1,9 @@
 import asyncio
+import code.logs
 from code.gpt_model import gpt_model
-from code.mcp import BrowserMCP, simple_implementation
+from code.mcp import BrowserMCP
 from code.schemas import ProductList
+from code.simple_mcp import simple_mcp
 
 from langchain_core.messages import AIMessage
 
@@ -63,5 +65,15 @@ async def main():
             print(f"[ {i + 1} ] {p.name.split(",")[0]} - {p.price}")
 
 
+async def take_screenshot():
+    """Wrapper to call the simple implementation example.
+    Access a web page, take a screenshot than save it as a ppng.
+    """
+
+    PAGE_URL = "https://www.samburaimoveis.com.br/"
+
+    await simple_mcp(page_url=PAGE_URL)
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(take_screenshot())
