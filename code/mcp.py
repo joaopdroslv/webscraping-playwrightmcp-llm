@@ -1,3 +1,4 @@
+import base64
 import os
 
 from dotenv import load_dotenv
@@ -19,6 +20,19 @@ class BrowserMCP:
             await client.call_tool("browser_wait_for", {"time": 5})
             snapshot = await client.call_tool("browser_snapshot", {})
         return snapshot.content
+
+    async def take_screenshot(self, url: str, filename: str) -> None:
+        async with Client(self.transport) as client:
+            await client.call_tool("browser_navigate", {"url": url})
+            await client.call_tool("browser_wait_for", {"time": 5})
+            result = await client.call_tool(
+                "browser_take_screenshot", {"fullPage": True, "type": "png"}
+            )
+            for item in result.content:
+                if getattr(item, "type", None) == "image":
+                    raw_bytes = base64.b64decode(item.data)
+                    with open(filename, "wb") as f:
+                        f.write(raw_bytes)
 
     async def query_product(self, url: str, input_ref: str, query: str) -> str:
         async with Client(self.transport) as client:
