@@ -5,7 +5,8 @@ from code.mcp import BrowserMCP
 from code.schemas.item import ItemDetailed, ItemsOutput
 from code.schemas.product import ProductsOutput
 from code.simple_mcp import simple_mcp
-from code.utils import write_into_xlsx
+from code.utils import make_dir, write_into_xlsx
+from datetime import datetime
 
 from langchain_core.messages import AIMessage
 
@@ -69,19 +70,16 @@ async def products_workflow() -> None:
         print(f"[ {i + 1} ] {p.name.split(",")[0]} - {p.price}")
 
 
-async def take_screenshot() -> None:
-    """Wrapper to call the simple implementation example.
-    Access a web page, take a screenshot than save it as a ppng.
-    """
-
-    PAGE_URL = "https://www.samburaimoveis.com.br/"
-
-    await simple_mcp(page_url=PAGE_URL)
-
-
 async def items_workflow() -> None:
 
+    run_id = "runId_" + str(int(datetime.now().timestamp()))
+    run_dir_path = make_dir(dir_name=run_id)
+
+    logger.info(run_id)
+    logger.info(run_dir_path)
+
     PAGE_URL = "https://www.samburaimoveis.com.br/busca_avancada?finalidade=Venda"
+
     browser_mcp = BrowserMCP()
 
     snapshot = await browser_mcp.extract_snapshot(url=PAGE_URL)
@@ -195,11 +193,14 @@ async def items_workflow() -> None:
         """
         )
 
-        print(response.model_dump())
+        item_ref = response.ref
+        scheenshot_filename = run_dir_path + f"/{run_id}_{item_ref}.png"
+        await browser_mcp.take_screenshot(url=item.url, filename=scheenshot_filename)
 
         items_detailed_list.append(response.model_dump())
 
-    write_into_xlsx(items_detailed_list)
+    output_xlsx_filename = run_dir_path + f"/{run_id}_output.xlsx"
+    write_into_xlsx(output=items_detailed_list, filename=output_xlsx_filename)
 
 
 if __name__ == "__main__":
