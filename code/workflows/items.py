@@ -1,7 +1,7 @@
 from code.gpt_model import gpt_model
 from code.logs import logger
 from code.mcp import BrowserMCP
-from code.prompts.items import get_item_details_prompt, found_items_prompt
+from code.prompts.items import found_items_prompt, get_item_details_prompt
 from code.schemas.items import ItemDetailed, ItemsOutput
 from code.utils import make_dir, write_into_xlsx
 from datetime import datetime
