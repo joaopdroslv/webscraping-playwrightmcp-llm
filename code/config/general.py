@@ -1,7 +1,7 @@
-from code.schemas.general import Site
+from code.schemas.items import ItemsWorkflowSite
 
 ITEMS_WORKFLOW_SITES = [
-    Site(
+    ItemsWorkflowSite(
         name="samburai-moveis",
         url="https://www.samburaimoveis.com.br/busca_avancada?finalidade=Venda",
     ),
