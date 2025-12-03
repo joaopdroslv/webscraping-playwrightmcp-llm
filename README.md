@@ -24,7 +24,7 @@ Follow the steps below to set up the environment and run the example.
 
 3. Build the workflow service:
     ```bash
-    docker compose build
+    docker compose build workflow
     ```
 
 4. Then run the workflow service (It is not a persistent service):
