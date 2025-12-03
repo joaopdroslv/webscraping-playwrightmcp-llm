@@ -12,7 +12,7 @@ class ItemsOutput(BaseModel):
     items: List[Item]
 
 
-class ItemDetailed(BaseModel):
+class ItemDetails(BaseModel):
     ref: str
     city: str
     neighborhood: str
@@ -29,7 +29,3 @@ class ItemDetailed(BaseModel):
     total_area: float
     built_area: float
     material: str = Field(examples=["Alvenaria", "Madeira"])
-
-
-class ItemsDetailedOutput(BaseModel):
-    items_detailed: List[Item]
