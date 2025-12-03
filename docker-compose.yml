@@ -11,6 +11,7 @@ services:
         "--browser", "chromium",
         "--headless",
         "--no-sandbox",
+        "--ignore-https-errors",
         "--port", "8931",
         "--allowed-hosts", "*"
       ]
