@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -10,13 +10,13 @@ class ItemsWorkflowSite(BaseModel):
 
 
 # Model structured output
-class ItemsOutput(BaseModel):
+class PageItemsOutput(BaseModel):
 
     items_urls: List[str]
 
 
 # Model structured output
-class ItemDetails(BaseModel):
+class ItemDetailsOutput(BaseModel):
 
     ref: str  # ID field
 
@@ -40,3 +40,8 @@ class ItemDetails(BaseModel):
     # Area
     total_area: float
     built_area: float
+
+
+class ItemDetails(ItemDetailsOutput):
+
+    site: Optional[str]
