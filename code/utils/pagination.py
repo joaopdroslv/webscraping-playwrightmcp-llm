@@ -23,7 +23,7 @@ def handle_pagination(page_snapshot: str) -> Pagination:
     response = pagination_model.invoke(full_prompt)
     pagination_output: PaginationOutput = response
 
-    logger.info(pagination_output.model_dump())
+    # logger.info(pagination_output.model_dump())
 
     url_pattern = pagination_output.page_url_pattern
     start = pagination_output.first_page_number
