@@ -1,5 +1,5 @@
+from code.config.logs import logger
 from code.gpt_model import gpt_model
-from code.logs import logger
 from code.mcp import BrowserMCP
 from code.prompts.items import found_items_prompt, get_item_details_prompt
 from code.schemas.items import ItemDetailed, ItemsOutput
@@ -57,7 +57,9 @@ async def items_workflow() -> None:
 
         item_ref = response.ref
         scheenshot_filename = run_dir_path + f"/{run_id}_{item_ref}.png"
-        await browser_mcp.take_screenshot(page_url=item.url, filename=scheenshot_filename)
+        await browser_mcp.take_screenshot(
+            page_url=item.url, filename=scheenshot_filename
+        )
 
         items_detailed_list.append(response.model_dump())
 

@@ -1,5 +1,5 @@
+from code.config.logs import logger
 from code.gpt_model import gpt_model
-from code.logs import logger
 from code.mcp import BrowserMCP
 from code.schemas.products import ProductsOutput
 
