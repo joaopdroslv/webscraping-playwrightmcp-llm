@@ -1,22 +1,4 @@
 services:
-  # playwright-mcp:
-  #   image: mcr.microsoft.com/playwright/mcp:latest
-  #   container_name: playwright-mcp
-  #   init: true
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8931:8931"
-  #   command:
-  #     [
-  #       "--browser", "chromium",
-  #       "--headless",
-  #       "--no-sandbox",
-  #       "--ignore-https-errors",
-  #       "--port", "8931",
-  #       "--allowed-hosts", "*"
-  #     ]
-  #   shm_size: "2gb"
-
   playwright-mcp:
     image: mcr.microsoft.com/playwright/mcp:latest
     container_name: playwright-mcp
@@ -31,8 +13,6 @@ services:
         "--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
         "--viewport-size", "1280x720",
         "--ignore-https-errors",
-        # "--locale", "pt-BR",
-        # "--tz", "America/Sao_Paulo",
         "--allowed-hosts", "*",
         "--port", "8931"
       ]
